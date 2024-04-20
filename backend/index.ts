@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import dotenv from 'dotenv'
+import adminRouter from './routes/adminRouter'
 
 dotenv.config();
 
@@ -13,9 +14,7 @@ app.use(morgan('dev'));
 app.use(express.json())
 
 // // Routes
-// app.use('/api/users', userRouter);
-// app.use('/api/admin', adminRouter);
-// app.use('/api/entities', entityRouter) //Getting all entities(categories,subjects,topics,quizzes)
+app.use('/api/admin', adminRouter);
 
 const uri = process.env.MONGO_URI || ""
 const PORT = process.env.PORT || 3000;
