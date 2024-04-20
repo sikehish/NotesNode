@@ -9,18 +9,15 @@ interface NavItemProps {
 const Navbar: React.FC = () => {
   return (
     <nav className="bg-gray-800 p-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <div className="flex items-center">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center justify-between">
           <Link to="/" className="text-white text-2xl font-bold mr-4">NotesNode</Link>
-          <ul className="flex space-x-4">
+          <ul className="flex items-start justify-center space-x-4">
             <NavItem to="/second-year">2nd Year</NavItem>
             <NavItem to="/third-year">3rd Year</NavItem>
             <NavItem to="/fourth-year">4th Year</NavItem>
+            <NavItem to="/admin-login">Login</NavItem>
           </ul>
-        </div>
-        <div>
-          {/* Admin Login Button or Link */}
-          <Link to="/admin/login" className="text-white hover:text-gray-300">Admin Login</Link>
         </div>
       </div>
     </nav>

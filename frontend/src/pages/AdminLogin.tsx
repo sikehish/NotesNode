@@ -20,11 +20,9 @@ const AdminLogin: React.FC = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        // Success toast notification
         toast.success('Login successful');
         navigate('/admin/dashboard');
       } else {
-        // Error toast notification
         toast.error(data.message);
       }
     } catch (error) {
@@ -34,8 +32,8 @@ const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+       <div className="w-full max-w-md p-8 bg-white rounded-md shadow-md">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Admin Login</h2>
         </div>
