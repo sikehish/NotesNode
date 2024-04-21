@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar.tsx';
 import Home from './pages/Home.tsx';
 import SecondYear from './pages/SecondYear.tsx';
@@ -17,10 +17,10 @@ const App: React.FC = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          {state?.user && <Route path="/second-year" element={<SecondYear />} />}
-          {state?.user && <Route path="/third-year" element={<ThirdYear />} />}
-          {state?.user && <Route path="/fourth-year" element={<FourthYear />} />}
-          {!state?.user && <Route path="/admin-login" element={<AdminLogin />} />}
+          <Route path="/second-year" element={state?.user ? <SecondYear /> : <Navigate to="/" /> } />
+          <Route path="/third-year" element={state?.user ? <ThirdYear /> : <Navigate to="/" /> } />
+          <Route path="/fourth-year" element={state?.user ? <FourthYear /> : <Navigate to="/" /> } />
+          <Route path="/admin-login" element={!state?.user ? <AdminLogin /> : <Navigate to="/" /> }  />
         </Routes>
       </div>
       <ToastContainer position="top-right" />
