@@ -4,14 +4,15 @@ Welcome to NotesNode - A simple note-taking application built with MERN, TS and 
 
 ## Description
 
-NotesNode allows you to create, read, update, and delete your notes easily. It provides a clean and intuitive user interface for managing your notes efficiently.
+NotesNode is a versatile web application designed to streamline the process of managing university-related tasks such as uploading notes and assignments, publishing notifications, and facilitating communication between students and faculty members.
 
-## Features
+Features
 
-- **Create Notes:** Add new notes with a title and content.
-- **View Notes:** Browse through your existing notes.
-- **Update Notes:** Edit the title or content of your notes.
-- **Delete Notes:** Remove unwanted notes from your collection.
+    Upload Notes and Assignments: Students can easily upload notes and assignments to share with their peers or submit to faculty members.
+    Publish Notifications: Faculty members can publish important notifications, announcements, and deadlines for students to stay informed.
+    Manage Projects: Organize and manage university projects efficiently, assign tasks, and monitor progress.
+    Collaboration: Foster collaboration between students and faculty members by providing a platform for discussions and feedback.
+    User Authentication: Secure login system to ensure that only authorized users have access to sensitive information.
 
 ## Installation
 
@@ -49,12 +50,12 @@ NotesNode allows you to create, read, update, and delete your notes easily. It p
    ```
 8. Open your web browser and go to `http://localhost:3000` to access NotesNode.
 
-## Usage
+Usage
 
-- **Create Note:** Click on the "New Note" button, enter a title and content for your note, then click "Save".
-- **View Note:** Click on the title of a note to view its content.
-- **Edit Note:** Click on the edit icon next to a note, make your changes, then click "Save".
-- **Delete Note:** Click on the delete icon next to a note to remove it from your collection.
+    Upload Notes and Assignments: Students can log in and upload their notes and assignments using the provided forms.
+    View Notifications: Students can view published notifications and announcements from the dashboard.
+    Manage Projects: Faculty members can create and manage projects, assign tasks to students, and track progress.
+    Communication: Users can interact through messaging features to discuss projects, assignments, and other related topics.
 
 ## Technologies Used
 
