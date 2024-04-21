@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuthContext } from '../context/AuthContext';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {dispatch} = useAuthContext()
 
   const navigate = useNavigate();
 
@@ -19,15 +21,19 @@ const AdminLogin: React.FC = () => {
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
+      console.log(data)
       if (response.ok) {
+        localStorage.setItem("user", JSON.stringify(data.data))
         toast.success('Login successful');
-        navigate('/admin/dashboard');
-      } else {
-        toast.error(data.message);
-      }
+        dispatch({ type: "LOGIN", payload: data.data});
+        setEmail("")
+        setPassword("")
+          navigate('/');     
+      } 
+        else throw new Error(data.message);
     } catch (error) {
       console.error('Error logging in:', error);
-      toast.error('An error occurred. Please try again later.');
+      toast.error((error as Error).message);
     }
   };
 

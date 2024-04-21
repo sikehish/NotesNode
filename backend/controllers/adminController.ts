@@ -15,5 +15,5 @@ export const adminLogin = (req: Request, res: Response) => {
 
   const token = jwt.sign({ email }, jwtSecret, { expiresIn: '1h' });
 
-  res.status(200).json({ message: 'Login successful', token });
+  res.status(200).json({ message: 'Login successful', data:{email: adminEmail, token} });
 };
