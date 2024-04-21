@@ -10,6 +10,7 @@ import FourthYear from './pages/FourthYear.tsx';
 import AdminLogin from './pages/AdminLogin.tsx';
 import { useAuthContext } from './context/AuthContext.tsx';
 import FirstYear from "./pages/FirstYear.tsx";
+import Notifications from "./pages/Notifications.tsx";
 
 const App: React.FC = () => {
   const {state}=useAuthContext()
@@ -23,6 +24,7 @@ const App: React.FC = () => {
           <Route path="/second-year" element={<SecondYear />} />
           <Route path="/third-year" element={<ThirdYear />} />
           <Route path="/fourth-year" element={<FourthYear />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/admin-login" element={!state?.user ? <AdminLogin /> : <Navigate to="/" /> }  />
         </Routes>
       </div>

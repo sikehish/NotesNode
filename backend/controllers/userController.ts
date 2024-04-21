@@ -41,9 +41,9 @@ export const downloadFile = (req: Request, res: Response) => {
 
 
 export const getNotifications = async (req: Request, res: Response): Promise<void> => {
-  const { year, semester, branch } = req.query;
+  const {  semester, branch } = req.query;
   try {
-    const notifications = await Notifications.find({ year, semester, branch }); 
+    const notifications = await Notifications.find({ semester, branch }).sort("-updatedAt"); 
     res.status(200).json({ status: 'success', data: notifications });
   } catch (error) {
     console.error(error);

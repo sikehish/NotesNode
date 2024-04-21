@@ -10,11 +10,8 @@ interface Notification extends Document {
 
 const notificationSchema: Schema = new Schema({
   branch: { type: String, required: true },
-  year: { type: Number, required: true },
   semester: { type: Number, required: true },
-  courseCode: { type: String, required: true },
-  heading: { type: String, required: true },
-  documentUrl: { type: String, required: true }
+  message: { type: String, required: true },
 },{
   timestamps: true
 });

@@ -173,16 +173,34 @@ export const editAssignment = async (req: Request, res: Response): Promise<void>
 
 export const uploadNotification = async (req: Request, res: Response): Promise<void> => {
   console.log("hhshshsh")
-  const { year, semester, branch, message } = req.body;
-  if (!year || !semester || !message.trim() || !branch) {
+  const { semester, branch, message } = req.body;
+  if ( !semester || !message.trim() || !branch) {
        res.status(400).json({ status: 'fail', message: 'All fields are required' });
        return
   }
   try {
-      const newNotification = await Notifications.create({ year, semester, branch, message: message.trim() });
+      const newNotification = await Notifications.create({ semester, branch, message: message.trim() });
       res.status(201).json({ status: 'success', data: newNotification });
   } catch (error) {
       console.error(error);
       res.status(500).json({ status: 'fail', message: 'Internal server error' });
+  }
+};
+
+export const deleteNotification = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  try {
+    const notification = await Notifications.findById(id);
+    if (!notification) {
+      res.status(404).json({ status: 'fail', message: 'Notification not found' });
+      return;
+    }
+;
+
+    await Notifications.findByIdAndDelete(id);
+    res.status(200).json({ status: 'success', message: 'Notification deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'fail', message: 'Internal server error' });
   }
 };

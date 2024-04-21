@@ -24,6 +24,7 @@ const Navbar: React.FC = () => {
              <NavItem to="/second-year">2nd Year</NavItem>
              <NavItem to="/third-year">3rd Year</NavItem>
               <NavItem to="/fourth-year">4th Year</NavItem>
+              <NavItem to="/notifications">Notifications</NavItem>
             {state?.user ? (
               <button
               className="text-white hover:text-gray-300"
