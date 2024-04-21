@@ -15,6 +15,8 @@ const noteSchema: Schema = new Schema({
   courseCode: { type: String, required: true },
   heading: { type: String, required: true },
   documentUrl: { type: String, required: true }
+},{
+  timestamps: true
 });
 
 

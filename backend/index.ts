@@ -1,26 +1,27 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import multer, { StorageEngine } from 'multer'; // Import necessary Multer types
 dotenv.config();
 
-import adminRouter from './routes/adminRouter'
+import adminRouter from './routes/adminRouter';
 
 const app = express();
 
 app.use(morgan('dev'));
 
-//Body parser
-app.use(express.json())
+// Body parser
+app.use(express.json({limit:'100mb'}));
 
-// // Routes
+// Routes
 app.use('/api/admin', adminRouter);
 
-const uri = process.env.MONGO_URI || ""
+const uri = process.env.MONGO_URI || '';
 const PORT = process.env.PORT || 3000;
 
 // Middleware for unhandled routes
-app.all('*', (req, res) => {
+app.all('*', (req: Request, res: Response) => {
   res.status(404).json({
     status: 'fail',
     message: `The API endpoint ${req.url} does not exist!`,
@@ -36,6 +37,6 @@ mongoose
       console.log(`Server is listening at ${PORT}`);
     });
   })
-  .catch((err) => {
+  .catch((err: Error) => {
     console.error('Error connecting to MongoDB Atlas:', err);
   });
