@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 
 interface Assignment extends Document {
     year: number;
+    branch: string
     semester: number;
     courseCode: string;
     heading: string;

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import Notes from '../models/notesModel';
 import Assignments from '../models/assignmentsModel';
+import Notifications from '../models/notificationModel';
 import multer, { StorageEngine } from 'multer';
 import  fs from "fs"
 
@@ -43,12 +44,12 @@ export const uploadNote = async (req: Request, res: Response): Promise<void> => 
   const { year, semester, courseCode, heading, branch } = req.body;
   // console.log(year, semester, courseCode, heading, req.file)
   const documentUrl=req.file?.filename
-  if (!year || !semester || !courseCode || !heading || !documentUrl || !branch) {
+  if (!year || !semester || !courseCode || !heading.trim() || !documentUrl || !branch) {
     res.status(400).json({ status: 'fail', message: 'All fields are required' });
     return
   }
   try {
-    const newNote = await Notes.create({ year, semester, courseCode, heading, documentUrl, branch });
+    const newNote = await Notes.create({ year, semester, courseCode, heading: heading.trim(), documentUrl, branch });
     res.status(201).json({ status: 'success', data: newNote });
   } catch (error) {
     console.error(error);
@@ -60,12 +61,12 @@ export const uploadAssignment = async (req: Request, res: Response): Promise<voi
   console.log("hhshshsh")
   const { year, semester, courseCode, heading, branch } = req.body;
   const documentUrl=req.file?.filename
-  if (!year || !semester || !courseCode || !heading || !documentUrl || !branch) {
+  if (!year || !semester || !courseCode || !heading.trim() || !documentUrl || !branch) {
        res.status(400).json({ status: 'fail', message: 'All fields are required' });
        return
   }
   try {
-      const newAssignment = await Assignments.create({ year, semester, courseCode, heading, documentUrl, branch });
+      const newAssignment = await Assignments.create({ year, semester, courseCode, heading: heading.trim(), documentUrl, branch });
       res.status(201).json({ status: 'success', data: newAssignment });
   } catch (error) {
       console.error(error);
@@ -116,15 +117,15 @@ export const deleteAssignment = async (req: Request, res: Response): Promise<voi
 export const editNote = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   const { heading, courseCode } = req.body;
-  if (!heading && !courseCode) {
+  if (!heading.trim() && !courseCode.trim()) {
     res.status(400).json({ status: 'fail', message: 'Heading or course code is required for update' });
     return;
   }
 
   try {
     const updateFields: any = {};
-    if (heading) updateFields['heading'] = heading;
-    if (courseCode) updateFields['courseCode'] = courseCode;
+    if (heading.trim()) updateFields['heading'] = heading.trim();
+    if (courseCode.trim()) updateFields['courseCode'] = courseCode.trim();
 
     const updatedNote = await Notes.findByIdAndUpdate(id, updateFields, { new: true });
 
@@ -143,15 +144,15 @@ export const editNote = async (req: Request, res: Response): Promise<void> => {
 export const editAssignment = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   const { heading, courseCode } = req.body;
-  if (!heading && !courseCode) {
+  if (!heading.trim() && !courseCode.trim()) {
     res.status(400).json({ status: 'fail', message: 'Heading or course code is required for update' });
     return;
   }
 
   try {
     const updateFields: any = {};
-    if (heading) updateFields['heading'] = heading;
-    if (courseCode) updateFields['courseCode'] = courseCode;
+    if (heading.trim()) updateFields['heading'] = heading.trim();
+    if (courseCode.trim()) updateFields['courseCode'] = courseCode.trim();
 
     const updatedAssignment = await Assignments.findByIdAndUpdate(id, updateFields, { new: true });
 
@@ -164,5 +165,22 @@ export const editAssignment = async (req: Request, res: Response): Promise<void>
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'fail', message: 'Internal server error' });
+  }
+};
+
+
+export const uploadNotification = async (req: Request, res: Response): Promise<void> => {
+  console.log("hhshshsh")
+  const { year, semester, branch, message } = req.body;
+  if (!year || !semester || !message.trim() || !branch) {
+       res.status(400).json({ status: 'fail', message: 'All fields are required' });
+       return
+  }
+  try {
+      const newNotification = await Notifications.create({ year, semester, branch, message: message.trim() });
+      res.status(201).json({ status: 'success', data: newNotification });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: 'fail', message: 'Internal server error' });
   }
 };

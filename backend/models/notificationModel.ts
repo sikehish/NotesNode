@@ -1,16 +1,14 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface Note extends Document {
+interface Notification extends Document {
   year: number;
   semester: number;
-  courseCode: string;
-  branch: string
-  heading: string;
-  documentUrl: string;
+  branch:string;
+  message: string
 }
 
 
-const noteSchema: Schema = new Schema({
+const notificationSchema: Schema = new Schema({
   branch: { type: String, required: true },
   year: { type: Number, required: true },
   semester: { type: Number, required: true },
@@ -22,6 +20,6 @@ const noteSchema: Schema = new Schema({
 });
 
 
-const NoteModel = mongoose.model<Note>('Note', noteSchema);
+const NotificationModel = mongoose.model<Notification>('Note', notificationSchema);
 
-export default NoteModel
+export default NotificationModel

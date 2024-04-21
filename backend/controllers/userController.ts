@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Notes from '../models/notesModel';
 import Assignments from '../models/assignmentsModel';
+import Notifications from '../models/notificationModel';
 import path from "path"
 
 export const getNotes = async (req: Request, res: Response): Promise<void> => {
@@ -36,3 +37,15 @@ export const downloadFile = (req: Request, res: Response) => {
   });
 };
 
+
+
+export const getNotifications = async (req: Request, res: Response): Promise<void> => {
+  const { year, semester, branch } = req.query;
+  try {
+    const notifications = await Notifications.find({ year, semester, branch }); 
+    res.status(200).json({ status: 'success', data: notifications });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'fail', message: 'Internal server error' });
+  }
+};

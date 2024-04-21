@@ -19,10 +19,10 @@ const App: React.FC = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/first-year" element={state?.user ? <FirstYear /> : <Navigate to="/" /> } />
-          <Route path="/second-year" element={state?.user ? <SecondYear /> : <Navigate to="/" /> } />
-          <Route path="/third-year" element={state?.user ? <ThirdYear /> : <Navigate to="/" /> } />
-          <Route path="/fourth-year" element={state?.user ? <FourthYear /> : <Navigate to="/" /> } />
+          <Route path="/first-year" element={<FirstYear />} />
+          <Route path="/second-year" element={<SecondYear />} />
+          <Route path="/third-year" element={<ThirdYear />} />
+          <Route path="/fourth-year" element={<FourthYear />} />
           <Route path="/admin-login" element={!state?.user ? <AdminLogin /> : <Navigate to="/" /> }  />
         </Routes>
       </div>
