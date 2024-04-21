@@ -14,6 +14,8 @@ interface Assignment extends Document {
     courseCode: { type: String, required: true },
     heading: { type: String, required: true },
     documentUrl: { type: String, required: true }
+  },{
+    timestamps: true
   });
   
   const AssignmentModel = mongoose.model<Assignment>('Assignment', assignmentSchema);

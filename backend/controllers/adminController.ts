@@ -27,13 +27,14 @@ const jwtSecret = process.env.JWT_KEY || '';
 
 export const adminLogin = (req: Request, res: Response) => {
   const { email, password } = req.body;
+  console.log("IN ADMIN LOGIN")
   console.log(email, password, adminEmail, adminPassword)
 
   if (email !== adminEmail || password !== adminPassword) {
     return res.status(401).json({ message: 'Invalid email or password' });
   }
 
-  const token = jwt.sign({ email }, jwtSecret, { expiresIn: '1h' });
+  const token = jwt.sign({ email }, jwtSecret);
 
   res.status(200).json({ message: 'Login successful', data:{email: adminEmail, token} });
 };
@@ -55,7 +56,6 @@ export const uploadNote = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-// Controller to upload a new assignment
 export const uploadAssignment = async (req: Request, res: Response): Promise<void> => {
   console.log("hhshshsh")
   const { year, semester, courseCode, heading } = req.body;
@@ -73,26 +73,96 @@ export const uploadAssignment = async (req: Request, res: Response): Promise<voi
   }
 };
 
-
-export const getNotes = async (req: Request, res: Response): Promise<void> => {
-  const { year, semester } = req.query
+export const deleteNotes = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
   try {
-    const notes = await Notes.find({ year, semester }); 
-    res.status(200).json({ status: 'success', data: notes });
+    const note = await Notes.findById(id);
+    if (!note) {
+      res.status(404).json({ status: 'fail', message: 'Note not found' });
+      return;
+    }
+    const filePath = `uploads/${note.documentUrl}`;
+    fs.unlinkSync(filePath);
+
+    await Notes.findByIdAndDelete(id);
+    res.status(200).json({ status: 'success', message: 'Note deleted successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'fail', message: 'Internal server error' });
   }
 };
 
-export const getAssignments = async (req: Request, res: Response): Promise<void> => {
-  const { year, semester } = req.query;
+export const deleteAssignment = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
   try {
-    const assignments = await Assignments.find({ year, semester }); 
-    res.status(200).json({ status: 'success', data: assignments });
+    const assignment = await Assignments.findById(id);
+    if (!assignment) {
+      res.status(404).json({ status: 'fail', message: 'Assignment not found' });
+      return;
+    }
+    const filePath = `uploads/${assignment.documentUrl}`;
+    fs.unlinkSync(filePath);
+
+    await Assignments.findByIdAndDelete(id);
+    res.status(200).json({ status: 'success', message: 'Assignment deleted successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'fail', message: 'Internal server error' });
   }
 };
 
+
+
+export const editNote = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const { heading, courseCode } = req.body;
+  if (!heading && !courseCode) {
+    res.status(400).json({ status: 'fail', message: 'Heading or course code is required for update' });
+    return;
+  }
+
+  try {
+    const updateFields: any = {};
+    if (heading) updateFields['heading'] = heading;
+    if (courseCode) updateFields['courseCode'] = courseCode;
+
+    const updatedNote = await Notes.findByIdAndUpdate(id, updateFields, { new: true });
+
+    if (!updatedNote) {
+      res.status(404).json({ status: 'fail', message: 'Note not found' });
+      return;
+    }
+
+    res.status(200).json({ status: 'success', message: 'Note updated successfully', data: updatedNote });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'fail', message: 'Internal server error' });
+  }
+};
+
+export const editAssignment = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const { heading, courseCode } = req.body;
+  if (!heading && !courseCode) {
+    res.status(400).json({ status: 'fail', message: 'Heading or course code is required for update' });
+    return;
+  }
+
+  try {
+    const updateFields: any = {};
+    if (heading) updateFields['heading'] = heading;
+    if (courseCode) updateFields['courseCode'] = courseCode;
+
+    const updatedAssignment = await Assignments.findByIdAndUpdate(id, updateFields, { new: true });
+
+    if (!updatedAssignment) {
+      res.status(404).json({ status: 'fail', message: 'Assignment not found' });
+      return;
+    }
+
+    res.status(200).json({ status: 'success', message: 'Assignment updated successfully', data: updatedAssignment });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'fail', message: 'Internal server error' });
+  }
+};

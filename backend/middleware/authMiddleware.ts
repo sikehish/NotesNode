@@ -12,6 +12,7 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction): Resp
     if (!token) {
       return res.status(401).json({ status: "fail", message: 'Unauthorized access. Invalid Bearer token.' });
     }
+    console.log(token)
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_KEY as jwt.Secret);
       console.log(decodedToken)
@@ -21,8 +22,8 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction): Resp
       }
 
   
-      const { id } = decodedToken;
-      ((req as unknown) as AuthReq).user = id;
+      const { email } = decodedToken;
+      ((req as unknown) as AuthReq).user = email;
       
       next();
     } catch (error) {

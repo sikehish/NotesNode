@@ -1,6 +1,5 @@
 import express from 'express';
-import {getAssignments, getNotes } from '../controllers/adminController';
-import { downloadFile } from '../controllers/userController';
+import { downloadFile, getAssignments, getNotes } from '../controllers/userController';
 
 const router = express.Router();
 

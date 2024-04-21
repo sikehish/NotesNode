@@ -1,9 +1,9 @@
-import React from 'react'
+import NotesAndAssignment from "@/components/NotesAndAssignment";
 
-function FourthYear() {
+const FourthYear: React.FC = () => {
   return (
-    <div>FourthYear</div>
-  )
-}
+    <NotesAndAssignment year={4} />
+  );
+};
 
-export default FourthYear
+export default FourthYear;
