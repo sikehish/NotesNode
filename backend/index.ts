@@ -6,6 +6,7 @@ import multer, { StorageEngine } from 'multer'; // Import necessary Multer types
 dotenv.config();
 
 import adminRouter from './routes/adminRouter';
+import userRouter from "./routes/userRouter"
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json({limit:'100mb'}));
 
 // Routes
 app.use('/api/admin', adminRouter);
+app.use('/api/user', userRouter);
 
 const uri = process.env.MONGO_URI || '';
 const PORT = process.env.PORT || 3000;

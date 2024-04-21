@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useAuthContext } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -90,7 +89,6 @@ const AdminLogin: React.FC = () => {
           </div>
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 };

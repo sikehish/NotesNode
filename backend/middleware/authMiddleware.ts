@@ -14,10 +14,12 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction): Resp
     }
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_KEY as jwt.Secret);
+      console.log(decodedToken)
   
-      if (!decodedToken || typeof decodedToken !== 'object' || !decodedToken.id) {
+      if (!decodedToken || typeof decodedToken !== 'object' || !decodedToken.email) {
         return res.status(401).json({ status: "fail", message: "Invalid token format" });
       }
+
   
       const { id } = decodedToken;
       ((req as unknown) as AuthReq).user = id;

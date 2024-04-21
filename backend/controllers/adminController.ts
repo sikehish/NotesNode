@@ -3,11 +3,16 @@ import jwt from 'jsonwebtoken';
 import Notes from '../models/notesModel';
 import Assignments from '../models/assignmentsModel';
 import multer, { StorageEngine } from 'multer';
+import  fs from "fs"
 
 
 const storage: StorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    const uploadDir = 'uploads';
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    cb(null, uploadDir); 
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
@@ -18,7 +23,7 @@ export const upload = multer({ storage });
 
 const adminEmail = process.env.ADMIN_EMAIL;
 const adminPassword = process.env.ADMIN_PW;
-const jwtSecret = process.env.JWT_SECRET || '';
+const jwtSecret = process.env.JWT_KEY || '';
 
 export const adminLogin = (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -67,3 +72,27 @@ export const uploadAssignment = async (req: Request, res: Response): Promise<voi
       res.status(500).json({ status: 'fail', message: 'Internal server error' });
   }
 };
+
+
+export const getNotes = async (req: Request, res: Response): Promise<void> => {
+  const { year, semester } = req.query
+  try {
+    const notes = await Notes.find({ year, semester }); 
+    res.status(200).json({ status: 'success', data: notes });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'fail', message: 'Internal server error' });
+  }
+};
+
+export const getAssignments = async (req: Request, res: Response): Promise<void> => {
+  const { year, semester } = req.query;
+  try {
+    const assignments = await Assignments.find({ year, semester }); 
+    res.status(200).json({ status: 'success', data: assignments });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'fail', message: 'Internal server error' });
+  }
+};
+

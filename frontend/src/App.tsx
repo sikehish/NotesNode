@@ -1,3 +1,5 @@
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar.tsx';
@@ -6,7 +8,6 @@ import SecondYear from './pages/SecondYear.tsx';
 import ThirdYear from './pages/ThirdYear.tsx';
 import FourthYear from './pages/FourthYear.tsx';
 import AdminLogin from './pages/AdminLogin.tsx';
-import { ToastContainer } from 'react-toastify';
 import { useAuthContext } from './context/AuthContext.tsx';
 
 const App: React.FC = () => {
