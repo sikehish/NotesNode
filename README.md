@@ -37,13 +37,13 @@ NotesNode is a versatile web application designed to streamline the process of m
    cd notesnode
    ```
 5. Set .env file
-  ```
-  MONGO_URI
-  MONGO_PW
-  JWT_KEY
-  ADMIN_EMAIL
-  ADMIN_PW
-  ```
+     ```
+     MONGO_URI
+     MONGO_PW
+     JWT_KEY
+     ADMIN_EMAIL
+     ADMIN_PW
+     ```
 6. Install dependencies:
    ```
    npm install
