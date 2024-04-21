@@ -59,14 +59,14 @@ export const uploadNote = async (req: Request, res: Response): Promise<void> => 
 
 export const uploadAssignment = async (req: Request, res: Response): Promise<void> => {
   console.log("hhshshsh")
-  const { year, semester, courseCode, heading, branch } = req.body;
+  const { year, semester, courseCode, heading, branch, deadline } = req.body;
   const documentUrl=req.file?.filename
-  if (!year || !semester || !courseCode || !heading.trim() || !documentUrl || !branch) {
+  if (!year || !semester || !courseCode || !heading.trim() || !documentUrl || !branch || !deadline) {
        res.status(400).json({ status: 'fail', message: 'All fields are required' });
        return
   }
   try {
-      const newAssignment = await Assignments.create({ year, semester, courseCode, heading: heading.trim(), documentUrl, branch });
+      const newAssignment = await Assignments.create({ year, semester, courseCode, heading: heading.trim(), documentUrl, branch, deadline });
       res.status(201).json({ status: 'success', data: newAssignment });
   } catch (error) {
       console.error(error);
@@ -125,7 +125,7 @@ export const editNote = async (req: Request, res: Response): Promise<void> => {
   try {
     const updateFields: any = {};
     if (heading.trim()) updateFields['heading'] = heading.trim();
-    if (courseCode.trim()) updateFields['courseCode'] = courseCode.trim();
+    if (courseCode) updateFields['courseCode'] = courseCode.trim();
 
     const updatedNote = await Notes.findByIdAndUpdate(id, updateFields, { new: true });
 
@@ -143,8 +143,9 @@ export const editNote = async (req: Request, res: Response): Promise<void> => {
 
 export const editAssignment = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
-  const { heading, courseCode } = req.body;
-  if (!heading.trim() && !courseCode.trim()) {
+  const { heading, courseCode, deadline } = req.body;
+  // console.log(deadline, heading, courseCode)
+  if (!heading.trim() && !courseCode.trim() && !deadline) {
     res.status(400).json({ status: 'fail', message: 'Heading or course code is required for update' });
     return;
   }
@@ -152,7 +153,8 @@ export const editAssignment = async (req: Request, res: Response): Promise<void>
   try {
     const updateFields: any = {};
     if (heading.trim()) updateFields['heading'] = heading.trim();
-    if (courseCode.trim()) updateFields['courseCode'] = courseCode.trim();
+    if (courseCode) updateFields['courseCode'] = courseCode.trim();
+    if (deadline) updateFields['deadline'] = deadline
 
     const updatedAssignment = await Assignments.findByIdAndUpdate(id, updateFields, { new: true });
 
