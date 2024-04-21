@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table"
-import { ExternalLink, Pencil, Trash } from 'lucide-react';
+import { ExternalLink, Pencil, Save, Trash } from 'lucide-react';
 import InputForm from './InputForm';
 
 interface Props{
@@ -182,7 +182,7 @@ const NotesAndAssignment: React.FC<Props> = ({ year }) => {
     const endpoint = documentType === 'notes' ? `/api/admin/edit-notes/${editingId}` : `/api/admin/edit-assignments/${editingId}`;
 
     try {
-      if(!editedHeading.trim() || !editedCourseCode || !editedDeadline){
+      if(!editedHeading.trim() || !editedCourseCode || (documentType=="assignments" && !editedDeadline) ){
         console.log("IN ",editedDeadline)
         throw new Error("No field can be left empty!") 
       }
@@ -304,9 +304,7 @@ const NotesAndAssignment: React.FC<Props> = ({ year }) => {
                 <TableCell className='flex items-center space-x-3'>
                   <ExternalLink className='cursor-pointer'  onClick={() => handleDownload(document.documentUrl)} />
                   {editingId === document._id ? (
-                    <button onClick={handleSaveEdit} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                      Save
-                    </button>
+                      <Save  onClick={handleSaveEdit} className='cursor-pointer text-blue-600'/>
                   ) : (
                     <>
                       <Trash className='cursor-pointer' onClick={() => handleDelete(document._id)} />
