@@ -1,6 +1,6 @@
 # NotesNode
 
-Welcome to NotesNode - a simple note-taking application built with MERN, TS and Tailwind!
+Welcome to NotesNode - A simple note-taking application built with MERN, TS and Tailwind!
 
 ## Description
 
