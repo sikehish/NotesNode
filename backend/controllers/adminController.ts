@@ -172,7 +172,7 @@ export const editAssignment = async (req: Request, res: Response): Promise<void>
 
 
 export const uploadNotification = async (req: Request, res: Response): Promise<void> => {
-  console.log("hhshshsh")
+  const branchCodes=["CS","IS","ME","CV","CSBS","BT","PST","CTM","ECE","EE","EI"]
   const { semester, branch, message } = req.body;
   if ( !semester || !message.trim() || !branch) {
        res.status(400).json({ status: 'fail', message: 'All fields are required' });

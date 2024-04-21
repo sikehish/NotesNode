@@ -1,4 +1,3 @@
-import React from 'react';
 
 interface NotificationFormProps {
   semester: string;
@@ -26,26 +25,26 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
 
   return (
     <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-4 md:w-3/4 lg:w-1/2">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <select
-          id="semester"
-          value={semester}
-          onChange={(e) => setSemester(e.target.value)}
-          className="border p-2 bg-white w-full"
-        >
-          <optgroup label="Select Semester">
-            {(new Array(8)).fill(0).map((_, i) => (
-              <option key={i + 1} value={i + 1}>
-                Semester {i + 1}
-              </option>
-            ))}
-          </optgroup>
-        </select>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <select
+  id="semester"
+  value={semester}
+  onChange={(e) => setSemester(e.target.value)}
+  className="border p-2 bg-white"
+>
+  <optgroup label="Select Semester">
+    {(new Array(8)).fill(0).map((_, i) => (
+      <option key={i + 1} value={i + 1}>
+        Semester {i + 1}
+      </option>
+    ))}
+  </optgroup>
+</select>
 
         <select
           value={branchCode}
           onChange={(e) => setBranchCode(e.target.value)}
-          className="border p-2 bg-white w-full"
+          className="border p-2 bg-white"
         >
           <optgroup label="Select Branch">
             {branchCodes.map((code) => (
@@ -56,7 +55,7 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
           </optgroup>
         </select>
       </div>
-
+     
       {user && (
         <>
           <textarea
