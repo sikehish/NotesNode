@@ -6,8 +6,9 @@ import path from "path"
 
 export const getNotes = async (req: Request, res: Response): Promise<void> => {
   const { year, semester, branch } = req.query
+  console.log(year, semester, branch)
   try {
-    const notes = await Notes.find({ year, semester, branch }); 
+    const notes = await Notes.find({ year, semester, branch }).sort("-updatedAt"); 
     res.status(200).json({ status: 'success', data: notes });
   } catch (error) {
     console.error(error);
@@ -18,7 +19,7 @@ export const getNotes = async (req: Request, res: Response): Promise<void> => {
 export const getAssignments = async (req: Request, res: Response): Promise<void> => {
   const { year, semester, branch } = req.query;
   try {
-    const assignments = await Assignments.find({ year, semester, branch }); 
+    const assignments = await Assignments.find({ year, semester, branch }).sort("-updatedAt"); 
     res.status(200).json({ status: 'success', data: assignments });
   } catch (error) {
     console.error(error);

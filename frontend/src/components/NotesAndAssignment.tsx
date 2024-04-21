@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "./ui/table"
 import { ExternalLink, Pencil, Trash } from 'lucide-react';
+import InputForm from './InputForm';
 
 interface Props{
     year: number
@@ -60,6 +61,8 @@ const NotesAndAssignment: React.FC<Props> = ({year}) => {
         const data = await response.json();
         setDocuments(data.data);
       } else {
+        const data = await response.json();
+        console.log(data)
         throw new Error('Failed to fetch data');
       }
     } catch (error) {
@@ -191,78 +194,28 @@ const NotesAndAssignment: React.FC<Props> = ({year}) => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Second Year Documents</h1>
-      <div className="flex items-center mb-4">
-        <label htmlFor="semester" className="mr-2">
-          Select Semester:
-        </label>
-        <select
-          id="semester"
-          value={semester}
-          onChange={(e) => setSemester(e.target.value)}
-          className="border p-1 mr-2"
-        >
-          <option value={year*2-1}>Semester {year*2-1}</option>
-          <option value={year*2}>Semester {year*2}</option>
-        </select>
-        <label htmlFor="documentType" className="mr-2">
-          Document Type:
-        </label>
-        <select
-          id="documentType"
-          value={documentType}
-          onChange={(e) => setDocumentType(e.target.value)}
-          className="border p-1 mr-2"
-        >
-          <option value="notes">Notes</option>
-          <option value="assignments">Assignments</option>
-        </select>
-        {user && (
-          <>
-            <input
-              id="fileInput"
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={handleFileChange}
-              className="mr-2"
-            />
-             <select
-              value={branchCode}
-              onChange={(e) => setBranchCode(e.target.value)}
-              className="border p-1 mr-2"
-            >
-              <option value="">Select Branch</option>
-              {branchCodes.map((code) => (
-                <option key={code} value={code}>{code}</option>
-              ))}
-            </select>
-            <select
-              value={courseCode}
-              onChange={(e) => setCourseCode(e.target.value)}
-              className="border p-1 mr-2"
-            >
-              <option value="">Select Course Code</option>
-              {+semester==2*(year)-1 ? courseCodes1.map((code) => (
-                <option key={code} value={code}>{code}</option>
-              )) : courseCodes2.map((code) => (
-                <option key={code} value={code}>{code}</option>
-              ))}
-            </select>
-            <input
-              type="text"
-              placeholder="Heading"
-              value={heading}
-              onChange={(e) => setHeading(e.target.value)}
-              className="border p-1 mr-2"
-            />
-            <button onClick={handleUpload} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-              Upload
-            </button>
-          </>
-        )}
-      </div>
-      <div>
-        <h2 className="text-xl font-bold mb-2">Documents</h2>
+      <h1 className="text-2xl font-bold mb-4 mt-2">Second Year Documents</h1>
+      <InputForm
+  semester={semester}
+  setSemester={setSemester}
+  documentType={documentType}
+  setDocumentType={setDocumentType}
+  user={user}
+  handleFileChange={handleFileChange}
+  branchCode={branchCode}
+  branchCodes={branchCodes}
+  setBranchCode={setBranchCode}
+  courseCode={courseCode}
+  setCourseCode={setCourseCode}
+  year={year}
+  courseCodes1={courseCodes1}
+  courseCodes2={courseCodes2}
+  heading={heading}
+  setHeading={setHeading}
+  handleUpload={handleUpload}
+/>
+      <div className='mt-12'>
+        <h2 className="text-xl font-bold mb-2">{documentType[0].toUpperCase() + documentType.slice(1)}</h2>
         <Table>
           <TableHeader>
             <TableRow>
@@ -295,7 +248,7 @@ const NotesAndAssignment: React.FC<Props> = ({year}) => {
                       className="px-2 py-1 bg-gray-200"
                     >
                       <option value="" >Select Course Code</option>
-                      {+semester==2*(year)-1 ? courseCodes1.map((code) => (
+                      {+semester===2*(year)-1 ? courseCodes1.map((code) => (
                 <option key={code} value={code}>{code}</option>
               )) : courseCodes2.map((code) => (
                 <option key={code} value={code}>{code}</option>
