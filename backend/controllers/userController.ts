@@ -4,9 +4,9 @@ import Assignments from '../models/assignmentsModel';
 import path from "path"
 
 export const getNotes = async (req: Request, res: Response): Promise<void> => {
-  const { year, semester } = req.query
+  const { year, semester, branch } = req.query
   try {
-    const notes = await Notes.find({ year, semester }); 
+    const notes = await Notes.find({ year, semester, branch }); 
     res.status(200).json({ status: 'success', data: notes });
   } catch (error) {
     console.error(error);
@@ -15,9 +15,9 @@ export const getNotes = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const getAssignments = async (req: Request, res: Response): Promise<void> => {
-  const { year, semester } = req.query;
+  const { year, semester, branch } = req.query;
   try {
-    const assignments = await Assignments.find({ year, semester }); 
+    const assignments = await Assignments.find({ year, semester, branch }); 
     res.status(200).json({ status: 'success', data: assignments });
   } catch (error) {
     console.error(error);

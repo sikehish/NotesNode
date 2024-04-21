@@ -20,6 +20,7 @@ const Navbar: React.FC = () => {
           </Link>
           <ul className="flex items-start justify-center space-x-4">
               <NavItem to="/">Home</NavItem>
+             {state?.user && <NavItem to="/first-year">1st Year</NavItem>}
              {state?.user && <NavItem to="/second-year">2nd Year</NavItem>}
              {state?.user && <NavItem to="/third-year">3rd Year</NavItem>}
              {state?.user && <NavItem to="/fourth-year">4th Year</NavItem>}

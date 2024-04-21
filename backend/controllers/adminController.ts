@@ -40,15 +40,15 @@ export const adminLogin = (req: Request, res: Response) => {
 };
 
 export const uploadNote = async (req: Request, res: Response): Promise<void> => {
-  const { year, semester, courseCode, heading } = req.body;
-  console.log(year, semester, courseCode, heading, req.file)
+  const { year, semester, courseCode, heading, branch } = req.body;
+  // console.log(year, semester, courseCode, heading, req.file)
   const documentUrl=req.file?.filename
-  if (!year || !semester || !courseCode || !heading || !documentUrl) {
+  if (!year || !semester || !courseCode || !heading || !documentUrl || !branch) {
     res.status(400).json({ status: 'fail', message: 'All fields are required' });
     return
   }
   try {
-    const newNote = await Notes.create({ year, semester, courseCode, heading, documentUrl });
+    const newNote = await Notes.create({ year, semester, courseCode, heading, documentUrl, branch });
     res.status(201).json({ status: 'success', data: newNote });
   } catch (error) {
     console.error(error);
@@ -58,14 +58,14 @@ export const uploadNote = async (req: Request, res: Response): Promise<void> => 
 
 export const uploadAssignment = async (req: Request, res: Response): Promise<void> => {
   console.log("hhshshsh")
-  const { year, semester, courseCode, heading } = req.body;
+  const { year, semester, courseCode, heading, branch } = req.body;
   const documentUrl=req.file?.filename
-  if (!year || !semester || !courseCode || !heading || !documentUrl) {
+  if (!year || !semester || !courseCode || !heading || !documentUrl || !branch) {
        res.status(400).json({ status: 'fail', message: 'All fields are required' });
        return
   }
   try {
-      const newAssignment = await Assignments.create({ year, semester, courseCode, heading, documentUrl });
+      const newAssignment = await Assignments.create({ year, semester, courseCode, heading, documentUrl, branch });
       res.status(201).json({ status: 'success', data: newAssignment });
   } catch (error) {
       console.error(error);

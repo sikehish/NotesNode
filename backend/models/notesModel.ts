@@ -10,6 +10,7 @@ interface Note extends Document {
 
 
 const noteSchema: Schema = new Schema({
+  branch: { type: String, required: true },
   year: { type: Number, required: true },
   semester: { type: Number, required: true },
   courseCode: { type: String, required: true },

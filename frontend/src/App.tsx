@@ -9,6 +9,7 @@ import ThirdYear from './pages/ThirdYear.tsx';
 import FourthYear from './pages/FourthYear.tsx';
 import AdminLogin from './pages/AdminLogin.tsx';
 import { useAuthContext } from './context/AuthContext.tsx';
+import FirstYear from "./pages/FirstYear.tsx";
 
 const App: React.FC = () => {
   const {state}=useAuthContext()
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/first-year" element={state?.user ? <FirstYear /> : <Navigate to="/" /> } />
           <Route path="/second-year" element={state?.user ? <SecondYear /> : <Navigate to="/" /> } />
           <Route path="/third-year" element={state?.user ? <ThirdYear /> : <Navigate to="/" /> } />
           <Route path="/fourth-year" element={state?.user ? <FourthYear /> : <Navigate to="/" /> } />

@@ -55,7 +55,7 @@ const NotesAndAssignment: React.FC<Props> = ({year}) => {
   const fetchData=useCallback(async () => {
     if (!semester) return;
     try {
-      const response = await fetch(`/api/user/${documentType}?year=${year}&semester=${semester}`);
+      const response = await fetch(`/api/user/${documentType}?branch=${branchCode}&year=${year}&semester=${semester}`);
       if (response.ok) {
         const data = await response.json();
         setDocuments(data.data);
@@ -66,7 +66,7 @@ const NotesAndAssignment: React.FC<Props> = ({year}) => {
       console.error('Error fetching documents:', error);
       toast.error("Failed to fetch documents");
     }
-  }, [semester, documentType, year])
+  }, [semester, documentType, year, branchCode])
 
   useEffect(() => {
     fetchData();
@@ -77,7 +77,8 @@ const NotesAndAssignment: React.FC<Props> = ({year}) => {
     setFile(selectedFile);
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     if (!user) {
       toast.error('Please log in to upload documents.');
       return;
@@ -92,6 +93,7 @@ const NotesAndAssignment: React.FC<Props> = ({year}) => {
     formData.append('semester', semester);
     formData.append('documentType', documentType);
     formData.append('courseCode', courseCode);
+    formData.append('branch', branchCode);
     formData.append('heading', heading);
     formData.append('document', file);
 
@@ -106,8 +108,6 @@ const NotesAndAssignment: React.FC<Props> = ({year}) => {
       if (response.ok) {
         toast.success("File uploaded!");
         setFile(null);
-        setCourseCode('');
-        setBranchCode('')
         setHeading('');
         fetchData(); // Refresh documents after upload
       } else {
