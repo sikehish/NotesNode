@@ -77,7 +77,3 @@ NotesNode is a versatile web application designed to streamline the process of m
 ## Contributing
 
 Contributions are welcome! Please feel free to submit bug reports, feature requests, or pull requests to help improve NotesNode.
-
-## Contact
-
-For any inquiries or feedback, please contact [yourname](https://github.com/sikehish).
